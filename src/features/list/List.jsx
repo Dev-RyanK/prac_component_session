@@ -8,8 +8,6 @@ import { Link, useNavigate } from "react-router-dom";
 const List = () => {
   const navigate = useNavigate();
   const todos = useSelector((state) => state.todos.todoList);
-  // console.log(todos);
-  // console.log("::::::::::::");
   const dispatch = useDispatch();
 
   const deleteHandler = (id) => {
@@ -17,15 +15,7 @@ const List = () => {
   };
 
   const onToggleStatusTodo = (id) => {
-    // console.log(id);
     dispatch(toggleStatusTodo(id));
-  };
-
-  const handleNavigate = (e, id) => {
-    e.preventDefault();
-    e.stopPropagation();
-    navigate(`/${id}`);
-    dispatch(getTodoById(id));
   };
 
   return (
@@ -36,18 +26,13 @@ const List = () => {
 
       <ListWrapper>
         {todos.map((todo) => {
-          // console.log(!todo.isDone);
           if (!todo.isDone) {
             const { title, comment, id } = todo;
             return (
               <ListBox key={`main-willCard-${id}`}>
-                <a
-                  href={`/${todo.id}`}
-                  onClick={(e) => handleNavigate(e, id)}
-                  key={todo.id}
-                >
-                  <div>상세보기</div>
-                </a>
+                <Link to={`/${todo.id}`} key={todo.id}>
+                  상세보기
+                </Link>
 
                 <div>
                   <h2>{title}</h2>
@@ -86,11 +71,7 @@ const List = () => {
             const { title, comment, id } = todo;
             return (
               <ListBox key={`main-doneCard-${id}`}>
-                <a
-                  href="#none"
-                  onClick={(e) => handleNavigate(e, id)}
-                  key={todo.id}
-                >
+                <a href="#none" key={todo.id}>
                   <div>상세보기</div>
                 </a>
                 <div>

@@ -1,56 +1,56 @@
 import React from "react";
 import styled from "styled-components";
-import { useState } from "react";
 import { addTodo } from "../../redux/modules/todos";
 import { useDispatch } from "react-redux";
+import Button from "../../components/button";
+import { useInput } from "../../hooks/useInput";
 
 const Form = () => {
-  const [todo, setTodo] = useState({
-    title: "",
-    comment: "",
-  });
-  // const todos = useSelector((state) => state.todos);
   const dispatch = useDispatch();
 
-  const onChangeHandler = (e) => {
-    const { name, value } = e.target;
-    setTodo({ ...todo, [name]: value });
-  };
+  const [title, onChangeTitleHandler, setTitle] = useInput("");
+  const [comment, onChangeCommentHandler, setComment] = useInput("");
 
-  const onClickHandler = (e) => {
+  const onAddTodoHandler = (e) => {
     e.preventDefault();
-    if (!todo.title || !todo.comment) return;
+    if (!title || !comment) return;
 
     dispatch(
       addTodo({
         id: JSON.stringify(new Date()),
-        ...todo,
+        title,
+        comment,
         isDone: false,
       })
     );
-    setTodo({ title: "", comment: "" });
+
+    // 초기화하는 기능이 필요해..
+    setTitle("");
+    setComment("");
   };
 
   return (
-    <StForm>
+    <StForm onSubmit={onAddTodoHandler}>
       <StInputContainer>
         <StLabel>제목</StLabel>
         <StInput
           type="text"
           name="title"
-          value={todo.title}
-          onChange={onChangeHandler}
+          value={title}
+          onChange={({ target: { value } }) => onChangeTitleHandler(value)}
         />
 
         <StLabel>내용</StLabel>
         <StInput
           type="text"
           name="comment"
-          value={todo.comment}
-          onChange={onChangeHandler}
+          value={comment}
+          onChange={({ target: { value } }) => onChangeCommentHandler(value)}
         />
       </StInputContainer>
-      <StButton onClick={onClickHandler}>추가하기</StButton>
+      <Button size="big" outlined>
+        추가하기
+      </Button>
     </StForm>
   );
 };
@@ -77,13 +77,4 @@ const StInput = styled.input`
   border: 1px solid #c97b63;
   border-radius: 12px;
   padding: 0 12px;
-`;
-const StButton = styled.button`
-  border: none;
-  height: 40px;
-  border-radius: 12px;
-  width: 140px;
-  font-weight: 600;
-  background-color: #c97b63;
-  color: white;
 `;

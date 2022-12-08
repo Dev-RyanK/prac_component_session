@@ -33,53 +33,45 @@ export const getTodoById = (payload) => {
 
 const initialState = { todoList: [], detail: {} };
 
-// [
-//   { id: 0, title: "리액트", comment: "리액트를 배워봅시다", isDone: false },
-// ];
-
-const todos = (state = initialState, action) => {
-  // console.log(action.payload);
-  switch (action.type) {
+const todos = (state = initialState, { payload, type }) => {
+  switch (type) {
     case ADD_TODO: {
-      return { ...state, todoList: [...state.todoList, action.payload] };
+      return { ...state, todoList: [...state.todoList, payload] };
     }
+
     case DELETE_TODO: {
       return {
         ...state,
-        todoList: state.todoList.filter((todo) => todo.id !== action.payload),
+        todoList: state.todoList.filter((todo) => todo.id !== payload),
       };
     }
+
     case TOGGLESTATUS_TODO: {
       return {
         ...state,
-        todoList: state.todoList.map((todo) => {
-          // console.log("action.payload: ", action.payload);
-          // console.log("-----------------------");
-          // console.log("todo.id: ", todo.id);
-
-          if (todo.id === action.payload) {
-            // console.log({ ...todo });
-            return {
-              ...todo,
-              isDone: !todo.isDone,
-            };
-          } else {
-            return todo;
-          }
-        }),
+        todoList: state.todoList.map((todo) => toggleMap(todo, payload)),
       };
     }
 
     case GET_TODO_BY_ID:
       return {
         ...state,
-        detail: state.todoList.find((todo) => {
-          return todo.id === action.payload;
-        }),
+        detail: state.todoList.find((todo) => todo.id === payload),
       };
 
     default:
       return state;
+  }
+};
+
+const toggleMap = (todo, payload) => {
+  if (todo.id === payload) {
+    return {
+      ...todo,
+      isDone: !todo.isDone,
+    };
+  } else {
+    return todo;
   }
 };
 

@@ -1,40 +1,63 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { getTodoById } from "../redux/modules/todos";
+import Todo from "./Todo";
+
+// render prop
+// 2. 화면 뷰
 
 const Detail = () => {
-  const dispatch = useDispatch();
-  const todo = useSelector((state) => state.todos.detail);
-
-  const { id } = useParams();
   const navigate = useNavigate();
 
-  // const cardObj = todo.find((item) => {
-  //   return item.id === id;
-  // });
-
-  // useEffect(() => {
-  //   dispatch(getTodoById(id));
-  // }, [dispatch, id]);
-  console.log(todo.id);
   return (
     <StDetailContainer>
       <DetailBox>
-        <DetailHeader>
-          <div>ID : {todo.id}</div>
-          <StButton
-            borderColor="#cb9b8c"
-            onClick={() => {
-              navigate("/");
-            }}
-          >
-            이전으로
-          </StButton>
-        </DetailHeader>
-        <DetailTitle>{todo.title}</DetailTitle>
-        <DetailComment>{todo.comment}</DetailComment>
+        <Todo>
+          {(todo) => {
+            return (
+              <>
+                {todo ? (
+                  <>
+                    <DetailHeader>
+                      <div>ID : {todo.id}</div>
+                      <StButton
+                        borderColor="#cb9b8c"
+                        onClick={() => {
+                          navigate("/");
+                        }}
+                      >
+                        이전으로
+                      </StButton>
+                    </DetailHeader>
+                    <DetailTitle>{todo.title}</DetailTitle>
+                    <DetailComment>{todo.comment}</DetailComment>
+                  </>
+                ) : (
+                  <>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        height: "100%",
+                      }}
+                    >
+                      Todo가 없어요...
+                    </div>
+                    <StButton
+                      borderColor="#cb9b8c"
+                      onClick={() => {
+                        navigate("/");
+                      }}
+                    >
+                      이전으로
+                    </StButton>
+                  </>
+                )}
+              </>
+            );
+          }}
+        </Todo>
       </DetailBox>
     </StDetailContainer>
   );

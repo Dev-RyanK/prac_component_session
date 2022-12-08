@@ -1,8 +1,8 @@
 import React from "react";
-import Header from "../components/header/Header";
-import Layout from "../components/layout/Layout";
-import Form from "../components/form/Form";
-import List from "../components/list/List";
+import Header from "../features/header/Header";
+import Layout from "../features/layout/Layout";
+import Form from "../features/form/Form";
+import List from "../features/list/List";
 
 const Home = () => {
   return (
