@@ -1,5 +1,6 @@
 import React from "react";
 import { styled } from "../../style/stitches.conf";
+import sstyled, { css } from "styled-components";
 
 const Button = ({ children, ...props }) => {
   return <StButton {...props}>{children}</StButton>;
@@ -35,23 +36,36 @@ const StButton = styled("button", {
   },
 });
 
-// const StyleButton = sstyled.div`
-//     ${({ size }) => {
-//       //   if (size === "big") {
-//       //     return css``;
-//       //   }
-//       //   if (size === "small") {
-//       //     return css``;
-//       //   }
+// styled components
+const StyledButton = sstyled.div`
+    ${({ size }) => {
+      switch (size) {
+        case "big":
+          return css`
+            width: 340px;
+          `;
 
-//       switch (size) {
-//         case "big":
-//           return css``;
+        case "small":
+          return css`
+            width: 150px;
+          `;
 
-//         case "small":
+        default:
+          return css`
+            width: 150px;
+          `;
+      }
+    }}
 
-//         default:
-//           return css``;
-//       }
-//     }}
-//  `;
+    ${({ outlined }) => {
+      return outlined
+        ? css`
+            border: 1px solid green;
+            color: green;
+          `
+        : css`
+            background-color: green;
+            color: white;
+          `;
+    }}
+ `;
