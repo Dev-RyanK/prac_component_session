@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import Todo from "./Todo";
+import GetTodo from "./GetTodo";
 
 // render prop
 // 2. 화면 뷰
@@ -12,7 +12,7 @@ const Detail = () => {
   return (
     <StDetailContainer>
       <DetailBox>
-        <Todo>
+        <GetTodo>
           {(todo) => {
             return (
               <>
@@ -57,7 +57,7 @@ const Detail = () => {
               </>
             );
           }}
-        </Todo>
+        </GetTodo>
       </DetailBox>
     </StDetailContainer>
   );

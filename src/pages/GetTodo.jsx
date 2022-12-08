@@ -3,8 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getTodoById } from "../redux/modules/todos";
 
-// 리덕스로부터 할 일만 하는거.
-const Todo = ({ children }) => {
+const GetTodo = ({ children }) => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const todo = useSelector((state) => state.todos.detail);
@@ -13,7 +12,8 @@ const Todo = ({ children }) => {
     dispatch(getTodoById(id));
   }, [dispatch, id]);
 
+  // render prop (children render prop)
   return children(todo);
 };
 
-export default Todo;
+export default GetTodo;
